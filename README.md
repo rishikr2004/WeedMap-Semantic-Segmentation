@@ -1,8 +1,9 @@
-# WeedMap-Semantic-Segmentation
-Multispectral semantic segmentation of crops vs. weeds using a 1.94M-parameter Lightweight U-Net in PyTorch.
-
 # 🌿 Multispectral Semantic Segmentation for Precision Agriculture
-
+## 📂 Dataset Access
+* **Original Source:** [ETH Zurich WeedMap (RedEdge-M Multispectral)](https://projects.asl.ethz.ch/datasets/doku.php?id=weedmap:weedmap)
+* **Cleaned & Ready-to-Use Dataset:** [Download my corrected version on Kaggle](YOUR_KAGGLE_LINK_HERE) 
+  *(Note: This custom Kaggle version pre-applies the 16-bit label remapping and mask polarity fixes discussed above, making it instantly ready for PyTorch Dataloaders).*
+  
 **Live Interactive Demo:** [Click here to try the web app on Hugging Face](YOUR_HUGGING_FACE_LINK_HERE)
 
 ## 📌 Project Overview
