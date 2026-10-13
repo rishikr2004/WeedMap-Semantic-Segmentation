@@ -2,7 +2,7 @@
 ## 📂 Dataset Access
 * **Original Source:** [ETH Zurich WeedMap (RedEdge-M Multispectral)](https://www.research-collection.ethz.ch/entities/researchdata/0a5dcd76-cc44-4fbe-9f48-d8a717c90a30)
 * **Cleaned & Ready-to-Use Dataset:** [Download my corrected version on Kaggle](https://www.kaggle.com/datasets/rishibihari/weedmap-rededge) 
-  *(Note: This custom Kaggle version pre-applies the 16-bit label remapping and mask polarity fixes discussed above, making it instantly ready for PyTorch Dataloaders).*
+  *(Note: This custom Kaggle version pre-applies the 16-bit label remapping and mask polarity fixes discussed below, making it instantly ready for PyTorch Dataloaders).*
   
 **Live Interactive Demo:** [Click here to try the web app on Hugging Face](https://huggingface.co/spaces/rishikr45/Precision-Agri-Segmentation)
 
