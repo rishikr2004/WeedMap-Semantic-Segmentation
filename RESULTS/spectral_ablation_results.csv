@@ -1,0 +1,4 @@
+Spectral Configuration,Channels,Weed F1 (%),Crop F1 (%),Weed IoU (%),PR-AUC,ROC-AUC,Crop->Weed Risk (%),Weed->Crop Risk (%)
+1-Ch Vegetation Index (NDVI),1,60.37,61.83,43.23,0.77,0.9757,2.96,3.78
+"3-Ch Standard RGB (R, G, B)",3,55.64,53.86,38.54,0.634,0.8977,0.82,20.64
+6-Ch Full RedEdge Multispectral,6,68.31,81.43,51.87,0.77,0.9827,0.8,6.63
