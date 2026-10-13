@@ -4,7 +4,7 @@
 * **Cleaned & Ready-to-Use Dataset:** [Download my corrected version on Kaggle](https://www.kaggle.com/datasets/rishibihari/weedmap-rededge) 
   *(Note: This custom Kaggle version pre-applies the 16-bit label remapping and mask polarity fixes discussed above, making it instantly ready for PyTorch Dataloaders).*
   
-**Live Interactive Demo:** [Click here to try the web app on Hugging Face](YOUR_HUGGING_FACE_LINK_HERE)
+**Live Interactive Demo:** [Click here to try the web app on Hugging Face](https://huggingface.co/spaces/rishikr45/Precision-Agri-Segmentation)
 
 ## 📌 Project Overview
 In precision agriculture, automated weed eradication using UAVs or robotic ground vehicles requires highly accurate pixel-level separation of crops and weeds. While standard indices like NDVI easily separate green vegetation from bare soil, they fail to distinguish crop foliage from weed foliage. 
