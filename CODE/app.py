@@ -2,8 +2,7 @@ import os
 import torch
 import torch.nn as nn
 import gradio as gr
-import numpy as np
-import matplotlib.pyplot as plt
+import spaces # Required for ZeroGPU
 
 # Define the U-Net Architecture
 class DoubleConv(nn.Module):
@@ -51,10 +50,10 @@ class LightweightUNet(nn.Module):
         d1 = self.dec1(torch.cat([e1, nn.functional.interpolate(self.up1(d2), size=e1.shape[2:], mode="bilinear", align_corners=False)], dim=1))
         return self.out_conv(d1)
 
-# Initialize and load model weights from the MODELS folder
-DEVICE = torch.device("cpu") # Cloud deployments run on CPU
+# Initialize and load model weights from the current directory
+DEVICE = torch.device("cpu") 
 model = LightweightUNet(in_channels=6, num_classes=3, base_filters=16).to(DEVICE)
-model_path = os.path.join("..", "MODELS", "best_unet_B_G_R_RE_NIR_NDVI.pth")
+model_path = "best_unet_B_G_R_RE_NIR_NDVI.pth"
 
 try:
     model.load_state_dict(torch.load(model_path, map_location=DEVICE))
@@ -63,16 +62,25 @@ try:
 except Exception as e:
     model_loaded = False
 
+# ZeroGPU requires at least one function to be decorated with @spaces.GPU
+@spaces.GPU
+def check_status():
+    return "ZeroGPU backend is connected and ready!"
+
 # Build UI
-with gr.Blocks(theme=gr.themes.Soft()) as app:
+with gr.Blocks() as app:
     gr.Markdown("# 🌿 Multispectral Precision Agriculture Segmentation")
     gr.Markdown("Interactive 1.94M-parameter U-Net for Crop vs. Weed classification.")
     
     if not model_loaded:
-        gr.Warning("Model weights not found. Please ensure the MODELS folder contains 'best_unet_B_G_R_RE_NIR_NDVI.pth'.")
+        gr.Warning("Model weights not found. Please ensure 'best_unet_B_G_R_RE_NIR_NDVI.pth' is uploaded.")
     else:
         gr.Markdown("**Status:** ✅ Model successfully loaded and ready for inference.")
         
     gr.Markdown("*Note: The full 600MB multispectral dataset is not hosted on GitHub to comply with file limits. This UI is a structural template for the Hugging Face deployment.*")
+    
+    btn = gr.Button("Check GPU Connection")
+    out = gr.Textbox(label="System Status")
+    btn.click(fn=check_status, inputs=[], outputs=[out])
 
 app.launch()
