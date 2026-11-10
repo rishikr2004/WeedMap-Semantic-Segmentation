@@ -8,7 +8,9 @@
   
 **Live Interactive Demo:** [Click here to try the web app on Hugging Face](https://huggingface.co/spaces/rishikr45/Precision-Agri-Segmentation)
 
-![Live App Demo](live%20app%20image.png)
+![Live App Demo](<img width="1917" height="970" alt="live app image" src="https://github.com/user-attachments/assets/6b124493-667f-401f-b7b7-61401874d281" />
+)<img width="1200" height="750" alt="training_loss" src="https://github.com/user-attachments/assets/fd16c85f-e65b-425c-9ae0-b0f6bb7ec212" />
+
 
 ## 📌 Project Overview
 In precision agriculture (smart farming), automated weed removal using drones or robotic vehicles requires highly accurate pixel-level separation of crops and weeds. While standard camera indices like NDVI easily separate green plants from bare soil, they fail to distinguish a crop from a weed because both are green. 
@@ -22,7 +24,9 @@ Training a model on the raw ETH Zurich dataset out-of-the-box yields a very poor
 
 By engineering a custom PyTorch `Dataset` loader to remap the labels and correctly invert the ignore masks, the model's performance was drastically improved. The cross-entropy training loss steadily decreased over a 25-epoch training period.
 
-![Training Loss Curve](RESULTS/training_loss.png)
+![Training Loss Curve](RESULTS/training_loss.png)<img width="1200" height="750" alt="training_loss" src="https://github.com/user-attachments/assets/a5d222d8-cfbd-4b92-911d-69d3cdeabefe" /><img width="1812" height="514" alt="docker_emulation" src="https://github.com/user-attachments/assets/4c518b25-1faf-44db-977d-0187f0d0b98d" />
+
+
 
 ## 👁️ Visual Predictions
 The AI model processes the images to accurately map the fields. Below is a comparison showing the False-Color (NIR-R-G) input, the NDVI channel, the Ground Truth (where Green is Crop and Red is Weed), and our model's final prediction.
@@ -57,7 +61,8 @@ To make sure this AI model can run directly on a drone without needing internet 
 1. **Model Compression:** The trained PyTorch weights (`.pth`) were successfully exported into a lightweight, hardware-agnostic `.onnx` file with a size of ~7.6 MB. 
 2. **ARM64 Emulation:** The entire AI pipeline was packed using Docker and successfully run on an ARM64 hardware emulator. The edge device emulation was successful, achieving a median latency of 61754.43 ms per tile. This proves the software is 100% ready to be loaded onto physical drone computers.
 
-![Docker Emulation Output](RESULTS/docker_emulation.png)
+![Docker Emulation Output](RESULTS/docker_emul<img width="1812" height="514" alt="docker_emulation" src="https://github.com/user-attachments/assets/4a28426f-b0cd-4819-a450-9358389efe15" />
+ation.png)
 
 ## 🚀 Future Scope & Hardware Acceleration
 The next logical step is moving from software simulation to physical hardware for real-world drone flights:
