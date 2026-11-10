@@ -9,6 +9,7 @@
 **Live Interactive Demo:** [Click here to try the web app on Hugging Face](https://huggingface.co/spaces/rishikr45/Precision-Agri-Segmentation)
 
 ![Live App Demo](https://github.com/user-attachments/assets/6b124493-667f-401f-b7b7-61401874d281)
+*👆 **Live Web Interface:** The deployed application provides a simple drag-and-drop interface where users can upload multispectral field images and instantly receive a segmented output map, demonstrating the model's fast inference capabilities in real-time.*
 
 ## 📌 Project Overview
 In precision agriculture (smart farming), automated weed removal using drones or robotic vehicles requires highly accurate pixel-level separation of crops and weeds. While standard camera indices like NDVI easily separate green plants from bare soil, they fail to distinguish a crop from a weed because both are green. 
@@ -23,11 +24,17 @@ Training a model on the raw ETH Zurich dataset out-of-the-box yields a very poor
 By engineering a custom PyTorch `Dataset` loader to remap the labels and correctly invert the ignore masks, the model's performance was drastically improved. The cross-entropy training loss steadily decreased over a 25-epoch training period.
 
 ![Training Loss Curve](https://github.com/user-attachments/assets/a5d222d8-cfbd-4b92-911d-69d3cdeabefe)
+*👆 **Training Performance:** As seen in the graph above, the training loss smoothly drops from over 0.65 down to below 0.20. This steady downward curve shows that the model successfully learned to distinguish the plant classes without fluctuating or struggling with the corrected dataset.*
 
 ## 👁️ Visual Predictions
-The AI model processes the images to accurately map the fields. Below is a comparison showing the False-Color (NIR-R-G) input, the NDVI channel, the Ground Truth (where Green is Crop and Red is Weed), and our model's final prediction.
+The AI model processes the images to accurately map the fields. Below is a side-by-side comparison showing how our model sees and decides.
 
 ![WeedMap Predictions](RESULTS/weedmap_predictions_003.png)
+*👆 **Understanding the Visuals (Left to Right):**
+1. **False-Color Input (NIR-R-G):** The raw multispectral image capturing Near-Infrared and Red bands to highlight plant biology.
+2. **NDVI Channel:** A standard vegetation index that easily highlights all living plants in bright green, but cannot separate crops from weeds.
+3. **Ground Truth:** The actual human-labelled correct map (Green = Crop, Red = Weed).
+4. **Lightweight U-Net Prediction:** Our model's final output. Notice how closely it matches the Ground Truth, successfully ignoring the background soil and neatly separating the red weeds from the green crops.*
 
 ## 📊 Quantitative Results (Test Field 003)
 The model was evaluated on over 13 million unseen valid pixels from Test Field `003`. 
@@ -37,11 +44,10 @@ The model was evaluated on over 13 million unseen valid pixels from Test Field `
 - **Weed ROC-AUC:** 0.9827
 
 ### 🚫 Agronomic Risk Metrics
-In real-world farming, accidentally spraying herbicide chemical on the main crops causes heavy financial loss. The model is specifically optimized with inverse-frequency class weighting to minimize this risk:
-- **Herbicide Damage Risk (Crop mistaken as Weed):** Only **0.80%**
-- **Weed Escape Risk (Weed mistaken as Crop):** 6.63%
+In real-world farming, accidentally spraying herbicide chemical on the main crops causes heavy financial loss. The model is specifically optimized with inverse-frequency class weighting to minimize this risk.
 
 ![Confusion Matrix and Metrics](RESULTS/confusion_matrix_003.png)
+*👆 **Confusion Matrix Analysis:** The dark blue diagonal blocks show our correct predictions. The most important metric for farmers is the tiny **0.80%** box in the middle-right. This proves the model almost never mistakes a valuable crop for a weed (Herbicide Damage Risk), ensuring the drone won't accidentally spray the wrong plants. The Weed Escape Risk (weeds mistaken for crops) is kept at an acceptable 6.63%.*
 
 ## 🔬 Spectral Ablation Study
 A controlled testing process (ablation study) was conducted to prove the necessity of multispectral cameras over standard RGB cameras. The 6-channel full multispectral stack (`B, G, R, RedEdge, NIR, NDVI`) significantly outperformed the basic camera setups:
@@ -55,9 +61,10 @@ A controlled testing process (ablation study) was conducted to prove the necessi
 ## 💻 Current Edge Deployment Status (Software)
 To make sure this AI model can run directly on a drone without needing internet or cloud servers, the following software deployment steps are fully completed:
 1. **Model Compression:** The trained PyTorch weights (`.pth`) were successfully exported into a lightweight, hardware-agnostic `.onnx` file with a size of ~7.6 MB. 
-2. **ARM64 Emulation:** The entire AI pipeline was packed using Docker and successfully run on an ARM64 hardware emulator. The edge device emulation was successful, achieving a median latency of 61754.43 ms per tile. This proves the software is 100% ready to be loaded onto physical drone computers.
+2. **ARM64 Emulation:** The entire AI pipeline was packed using Docker and successfully run on an ARM64 hardware emulator. 
 
 ![Docker Emulation Output](https://github.com/user-attachments/assets/4a28426f-b0cd-4819-a450-9358389efe15)
+*👆 **Edge Device Emulation:** The terminal output above confirms that the 7.6 MB ONNX model successfully initialized and ran inference inside an emulated ARM64 edge environment without crashing. It achieved a median latency of ~61,754 ms per tile, proving the software is structurally 100% ready to be loaded onto physical drone companion computers.*
 
 ## 🚀 Future Scope & Hardware Acceleration
 The next logical step is moving from software simulation to physical hardware for real-world drone flights:
